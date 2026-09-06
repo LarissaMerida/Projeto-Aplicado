@@ -1,0 +1,1 @@
+A pipeline de ci deve avaliar vulnerabilidade, possíveis cve's, uso de libs defasadas e qualidade de código

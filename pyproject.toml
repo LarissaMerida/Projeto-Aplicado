@@ -1,0 +1,26 @@
+[project]
+name = "projeto-aplicado"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Larissa",email = "larissadasilvasantos746@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "django (==5.*)",
+    "python-dotenv (>=1.0,<2.0)"
+]
+
+[dependency-groups]
+dev = [
+    "bandit (>=1.8,<2.0)",
+    "pip-audit (>=2.9,<3.0)",
+    "pre-commit (>=4.0,<5.0)",
+    "ruff (>=0.11,<1.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

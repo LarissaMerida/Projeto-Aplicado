@@ -1,0 +1,43 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.13
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: django-check
+        name: Django deployment check
+        entry: poetry run python src/manage.py check --deploy
+        language: system
+        pass_filenames: false
+      - id: pip-audit
+        name: Dependency vulnerability audit
+        entry: poetry run pip-audit
+        language: system
+        pass_filenames: false
+      - id: outdated-dependencies
+        name: Outdated dependency report
+        entry: poetry show --outdated
+        language: system
+        pass_filenames: false
+      - id: bandit
+        name: Bandit security analysis
+        entry: poetry run bandit -r src
+        language: system
+        pass_filenames: false
+      - id: django-tests
+        name: Django tests
+        entry: poetry run python src/manage.py test
+        language: system
+        pass_filenames: false
