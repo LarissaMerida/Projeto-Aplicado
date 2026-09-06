@@ -6,7 +6,7 @@ authors = [
     {name = "Larissa",email = "larissadasilvasantos746@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<4.0"
 dependencies = [
     "django (==5.*)",
     "python-dotenv (>=1.0,<2.0)"
