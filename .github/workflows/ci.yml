@@ -47,3 +47,24 @@ jobs:
 
       - name: Run pre-commit checks
         run: poetry run pre-commit run --all-files
+
+  build:
+    needs: analyze
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build application image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: |
+            projeto-aplicado:sha-${{ github.sha }}
+            projeto-aplicado:build-${{ github.run_number }}-${{ github.run_attempt }}
