@@ -28,7 +28,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-    
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -41,7 +41,7 @@ jobs:
 
       - name: Validate Poetry lock
         run: poetry check --lock
-        
+
       - name: Install project dependencies
         run: poetry install --no-interaction --no-ansi
 
