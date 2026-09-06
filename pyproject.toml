@@ -1,0 +1,41 @@
+[project]
+name = "projeto-aplicado"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Larissa",email = "larissadasilvasantos746@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11,<4.0"
+dependencies = [
+    "django (==5.*)",
+    "psycopg[binary] (>=3.2,<4.0)",
+    "python-dotenv (>=1.0,<2.0)"
+]
+
+[dependency-groups]
+dev = [
+    "bandit (>=1.8,<2.0)",
+    "pip-audit (>=2.9,<3.0)",
+    "pylint (>=3.3,<4.0)",
+    "pre-commit (>=4.0,<5.0)",
+    "ruff (>=0.11,<1.0)",
+    "setuptools (>=83.0.0,<84.0.0)"
+]
+
+[tool.pylint.main]
+py-version = "3.11"
+ignore = ["migrations"]
+
+[tool.pylint.messages_control]
+disable = [
+    "invalid-name",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "missing-module-docstring"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,53 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.13
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: environment-check
+        name: Check Python environment
+        entry: python scripts/check_environment.py
+        language: system
+        pass_filenames: false
+      - id: django-check
+        name: Django deployment check
+        entry: python src/manage.py check --deploy
+        language: system
+        pass_filenames: false
+      - id: pip-audit
+        name: Dependency vulnerability audit
+        entry: python -m pip_audit
+        language: system
+        pass_filenames: false
+      - id: outdated-dependencies
+        name: Outdated dependency report
+        entry: python -m pip list --outdated
+        language: system
+        pass_filenames: false
+      - id: bandit
+        name: Bandit security analysis
+        entry: python -m bandit -r src
+        language: system
+        pass_filenames: false
+      - id: pylint
+        name: Pylint code quality analysis
+        entry: python -m pylint src
+        language: system
+        pass_filenames: false
+      - id: django-tests
+        name: Django tests
+        entry: python src/manage.py test
+        language: system
+        pass_filenames: false
