@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME:-projeto_aplicado}
+      POSTGRES_USER: ${DB_USER:-projeto_aplicado}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change-this-password}
+    ports:
+      - "${DB_EXTERNAL_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-projeto_aplicado} -d ${DB_NAME:-projeto_aplicado}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+    volumes:
+      - .:/app
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-django-insecure-development-only}
+      DJANGO_DEBUG: ${DJANGO_DEBUG:-True}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1}
+      DB_ENGINE: django.db.backends.postgresql
+      DB_NAME: ${DB_NAME:-projeto_aplicado}
+      DB_USER: ${DB_USER:-projeto_aplicado}
+      DB_PASSWORD: ${DB_PASSWORD:-change-this-password}
+      DB_HOST: db
+      DB_PORT: 5432
+    ports:
+      - "${WEB_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
